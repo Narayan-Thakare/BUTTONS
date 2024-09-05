@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Data</title>
+    <style>
+        overlay the data here
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .input-container input {
+            margin: 10px 0;
+            padding: 8px;
+            font-size: 16px;
+            width: 80%;
+        }
+
+        .input-container button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- overlay the data here -->
+
+    <div class="input-container">
+        <input type="text" id="certificate-number" placeholder="Certificate Number">
+        <input type="date" id="certificate-date">
+        <button onclick="submitData()">Go to Certificate</button>
+    </div>
+
+    <script>
+        function submitData() {
+            const certificateNumber = document.getElementById('certificate-number').value;
+            const certificateDate = document.getElementById('certificate-date').value;
+
+            // Store the values in local storage
+            localStorage.setItem('certificateNumber', certificateNumber);
+            localStorage.setItem('certificateDate', certificateDate);
+
+            // Redirect to the certificate page
+            window.location.href = 'certificate.html';
+        }
+    </script>
+</body>
+</html>

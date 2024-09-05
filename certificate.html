@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Certificate</title>
+    <style>
+        .certificate-container {
+            position: relative;
+            width: 640px;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+
+        #certificate-video {
+            width: 100%;
+        }
+
+        .text-overlay {
+            position: absolute;
+            color: #000; /* Black color */
+            font-size: 27px;
+            font-family: Arial, sans-serif;
+            background: rgba(239, 235, 235, 0.5);
+            padding: 5px;
+            pointer-events: none;
+            z-index: 10;
+            font-weight: bold; /* Make the text bold */
+        }
+
+        #number-overlay {
+            top: 50%;
+            left: 10%;
+        }
+
+        #date-overlay {
+            top: 30%;
+            left: 10%;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 480px) {
+            .certificate-container {
+                width: 100%;
+            }
+
+            .text-overlay {
+                font-size: 18px;
+                padding: 3px;
+            }
+
+            #number-overlay, #date-overlay {
+                left: 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate-container">
+        <video id="certificate-video" autoplay loop muted>
+            <source src="certificate.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div id="number-overlay" class="text-overlay"></div>
+        <div id="date-overlay" class="text-overlay"></div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Retrieve data from local storage
+            const certificateNumber = localStorage.getItem('certificateNumber');
+            const certificateDate = localStorage.getItem('certificateDate');
+
+            // Update the overlay elements with the retrieved values
+            document.getElementById('number-overlay').textContent = certificateNumber;
+            document.getElementById('date-overlay').textContent = certificateDate;
+
+            // Play the video
+            const video = document.getElementById('certificate-video');
+            video.play();
+        }
+    </script>
+</body>
+</html>
