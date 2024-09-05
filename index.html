@@ -5,47 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Data</title>
     <style>
-        /* overlay the data here */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
         .input-container {
+            background-color: #ffffff;
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 450px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .input-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .input-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
         }
 
         .input-container input {
-            margin: 10px 0;
-            padding: 8px;
+            margin: 12px 0;
+            padding: 14px;
             font-size: 16px;
-            width: 80%;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-container input:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
         }
 
         .input-container button {
-            padding: 10px 20px;
+            margin-top: 25px;
+            padding: 14px 22px;
             font-size: 18px;
+            color: #ffffff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-container button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        .input-container button:active {
+            background-color: #004085;
+        }
+
+        @media (max-width: 600px) {
+            .input-container {
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            .input-container input {
+                padding: 12px;
+                font-size: 15px;
+            }
+
+            .input-container button {
+                padding: 12px 18px;
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- overlay the data here -->
-
     <div class="input-container">
-        <input type="text" id="certificate-number" placeholder="Certificate Number">
+        <h2>Enter Certificate Details</h2>
+        <input type="text" id="certificate-number" placeholder="Adhar Last Four Digit">
         <input type="date" id="certificate-date">
         <input type="date" id="certificate-date1">
         <input type="date" id="certificate-date2">
         <input type="time" id="certificate-time">
-
-
-
-
-
-       
-
-        
-
-        
         <button onclick="submitData()">Go to Certificate</button>
     </div>
 
@@ -55,20 +113,14 @@
             const certificateDate = document.getElementById('certificate-date').value;
             const certificateDate1 = document.getElementById('certificate-date1').value;
             const certificateDate2 = document.getElementById('certificate-date2').value;
-            const certificatetime = document.getElementById('certificate-time').value;
-
-
-
+            const certificateTime = document.getElementById('certificate-time').value;
 
             // Store the values in local storage
             localStorage.setItem('certificateNumber', certificateNumber);
             localStorage.setItem('certificateDate', certificateDate);
             localStorage.setItem('certificateDate1', certificateDate1);
             localStorage.setItem('certificateDate2', certificateDate2);
-            localStorage.setItem('certificatetime', certificatetime);
-
-
-            
+            localStorage.setItem('certificateTime', certificateTime);
 
             // Redirect to the certificate page
             window.location.href = 'certificate.html';

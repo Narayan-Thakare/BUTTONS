@@ -3,220 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Certificate</title>
+    <title>Input Data</title>
     <style>
-        /* Remove margin, padding, and border from all elements */
-        * {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            box-sizing: border-box;
+        /* overlay the data here */
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
         }
 
-        /* Prevent scrolling and make the body take full viewport height */
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+        .input-container input {
+            margin: 10px 0;
+            padding: 8px;
+            font-size: 16px;
+            width: 80%;
         }
 
-        /* Make the container responsive */
-        .certificate-container {
-            position: relative;
-            width: 100vw; /* Full viewport width */
-            height: 100vh; /* Full viewport height */
-            overflow: hidden; /* Prevent scrolling within the container */
-        }
-
-        /* Adjust the video to fit within the container */
-        #certificate-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensure the video covers the entire container */
-        }
-
-        .text-overlay {
-            position: absolute;
-            color: #0a0101; /* Light text color for contrast */
-            font-size: 12px; /* Default font size */
-            font-family: Arial, sans-serif;
-            background: rgba(255, 255, 255, 0.7); /* Light background with 70% opacity */
-            padding: 5px;
-            pointer-events: none;
-            z-index: 10;
-            font-weight: bold; /* Make the text bold */
-        }
-
-        #number-overlay {
-            top: 50%;
-            left: 10%;
-            transform: translate(-50%, -50%);
-        }
-
-        #date-overlay {
-            top: 55%;
-            left: 10%;
-            transform: translate(-50%, -50%);
-        }
-
-        #date2-overlay {
-            top: 60%;
-            left: 10%;
-            transform: translate(-50%, -50%);
-        }
-
-        #date1-overlay {
-            top: 65%;
-            left: 10%;
-            transform: translate(-50%, -50%);
-        }
-
-        #time-overlay {
-            top: 70%;
-            left: 10%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Media query for smaller screens */
-        @media (max-width: 480px) {
-            .text-overlay {
-                font-family: sans-serif;
-                font-size: 13px; /* Adjust font size for better readability on small screens */
-                padding: 3px; /* Reduce padding */
-                background: #ffffff; /* Light background */
-                color: #0b0000; /* Dark text color for contrast */
-            }
-
-            #number-overlay {
-                top: 29.70%; /* Adjust positioning for smaller screens */
-                left: 58%;
-                font-size: 23px; /* Adjust font size for better readability on small screens */
-            }
-
-            #date-overlay {
-                top: 41.66%; /* Adjust positioning for smaller screens */
-                left: 8%;
-                transform: translateY(-50%);
-            }
-
-            #date2-overlay {
-                top: 41.66%; /* Adjust positioning for smaller screens */
-                left: 50%;
-                transform: translateY(-50%);
-            }
-
-            #date1-overlay {
-                top: 46.4%; /* Adjust positioning for smaller screens */
-                left: 33%;
-                font-size: 14px; /* Adjust font size for better readability on small screens */
-            }
-
-            #time-overlay {
-                top: 41.66%; /* Adjust positioning for smaller screens */
-                left: 37%;
-                font-size: 13px; /* Adjust font size for better readability on small screens */
-            }
-
-            /* Ensure container and video take full screen on mobile */
-            .certificate-container {
-                width: 100%;
-                height: 100vh; /* Use full viewport height */
-            }
+        .input-container button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="certificate-container">
-        <video id="certificate-video" autoplay loop muted>
-            <source src="certificate.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div id="number-overlay" class="text-overlay"></div>
-        <div id="date-overlay" class="text-overlay"></div>
-        <div id="date2-overlay" class="text-overlay"></div>
-        <div id="date1-overlay" class="text-overlay"></div>
-        <div id="time-overlay" class="text-overlay"></div>
+    <!-- overlay the data here -->
+
+    <div class="input-container">
+        <input type="text" id="certificate-number" placeholder="Certificate Number">
+        <input type="date" id="certificate-date">
+        <input type="date" id="certificate-date1">
+        <input type="date" id="certificate-date2">
+        <input type="time" id="certificate-time">
+
+
+
+
+
+       
+
+        
+
+        
+        <button onclick="submitData()">Go to Certificate</button>
     </div>
 
     <script>
-       window.onload = function() {
-            // Retrieve data from local storage
-            const certificateNumber = localStorage.getItem('certificateNumber');
-            const certificateDate = localStorage.getItem('certificateDate');
-            const certificateDate2 = localStorage.getItem('certificateDate2');
-            const certificateDate1 = localStorage.getItem('certificateDate1');
-            const certificateTime = localStorage.getItem('certificatetime');
-
-            // Function to format the date in `YYMMDDHHMM` format
-            function formatDateForDate1(dateString, timeString) {
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) {
-        // If the date is invalid, return a default or error message
-        return 'Invalid Date';
-    }
-
-    // Format the date components
-    const year = date.getFullYear().toString().slice(-2); // Last two digits of the year
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month with leading zero
-    const day = date.getDate().toString().padStart(2, '0'); // Day with leading zero
-
-    // Parse and format the time
-    const time = new Date(`1970-01-01T${timeString}`); // Use a dummy date
-    if (isNaN(time.getTime())) {
-        return 'Invalid Time';
-    }
-    let hours = time.getHours();
-    const minutes = time.getMinutes().toString().padStart(2, '0'); // Minutes with leading zero
-    const period = hours >= 12 ? 'PM' : 'AM';
-
-    hours = hours % 12;
-    hours = hours ? hours : 12; // Hour '0' should be '12'
-
-    // Combine date and time into the final format
-    return `${year}${month}${day}${hours}${minutes} ${period}`;
-}
+        function submitData() {
+            const certificateNumber = document.getElementById('certificate-number').value;
+            const certificateDate = document.getElementById('certificate-date').value;
+            const certificateDate1 = document.getElementById('certificate-date1').value;
+            const certificateDate2 = document.getElementById('certificate-date2').value;
+            const certificatetime = document.getElementById('certificate-time').value;
 
 
-            // Function to format the date in `DD MMM, YY` format
-            function formatDate(dateString) {
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) {
-                    // If the date is invalid, return a default or error message
-                    return 'Invalid Date';
-                }
-                const day = date.toLocaleDateString('en-GB', { day: '2-digit' });
-                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                const month = monthNames[date.getMonth()]; // Get abbreviated month name
-                const year = date.toLocaleDateString('en-GB', { year: '2-digit' });
-                
-                return `${day} ${month}, ${year}`;
-            }
 
-            // Function to format the time in `HHMM` format
-            function formatTime(timeString) {
-                const time = new Date(`1970-01-01T${timeString}`);
-                if (isNaN(time.getTime())) {
-                    return 'Invalid Time';
-                }
-                let hours = time.getHours();
-                const minutes = time.getMinutes().toString().padStart(2, '0'); // Minutes with leading zero
-                const period = hours >= 12 ? 'PM' : 'AM';
 
-                hours = hours % 12;
-                hours = hours ? hours : 12; // Hour '0' should be '12'
-                return `${hours}:${minutes} ${period}`;
-            }
+            // Store the values in local storage
+            localStorage.setItem('certificateNumber', certificateNumber);
+            localStorage.setItem('certificateDate', certificateDate);
+            localStorage.setItem('certificateDate1', certificateDate1);
+            localStorage.setItem('certificateDate2', certificateDate2);
+            localStorage.setItem('certificatetime', certificatetime);
 
-            // Update the overlay elements with the retrieved values
-            document.getElementById('number-overlay').textContent = certificateNumber;
-            document.getElementById('date-overlay').textContent = formatDate(certificateDate);
-            document.getElementById('date2-overlay').textContent = formatDate(certificateDate2);
-            document.getElementById('date1-overlay').textContent = formatDateForDate1(certificateDate1);
-            document.getElementById('time-overlay').textContent = formatTime(certificateTime);
 
-            // Play the video
-            const video = document.getElementById('certificate-video');
-            video.play();
+            
+
+            // Redirect to the certificate page
+            window.location.href = 'certificate.html';
         }
     </script>
 </body>
