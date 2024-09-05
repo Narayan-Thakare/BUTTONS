@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Certificate</title>
     <style>
+        /* Make the container full-screen */
         .certificate-container {
             position: relative;
-            width: 640px;
-            margin: 0 auto;
-            margin-top: 50px;
+            width: 100vw; /* Full viewport width */
+            height: 100vh; /* Full viewport height */
+            margin: 0;
+            overflow: hidden;
         }
 
+        /* Make the video full-screen */
         #certificate-video {
             width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover the entire container */
         }
 
         .text-overlay {
@@ -31,19 +36,17 @@
         #number-overlay {
             top: 50%;
             left: 10%;
+            transform: translateY(-50%);
         }
 
         #date-overlay {
             top: 30%;
             left: 10%;
+            transform: translateY(-50%);
         }
 
         /* Media query for smaller screens */
         @media (max-width: 480px) {
-            .certificate-container {
-                width: 100%;
-            }
-
             .text-overlay {
                 font-size: 18px;
                 padding: 3px;
