@@ -20,27 +20,27 @@
             overflow: hidden;
         }
 
-        /* Make the container shorter */
+        /* Make the container responsive */
         .certificate-container {
             position: relative;
             width: 100vw; /* Full viewport width */
-            height: 80vh; /* 80% of viewport height */
+            height: 100vh; /* Full viewport height */
             overflow: hidden; /* Prevent scrolling within the container */
         }
 
-        /* Adjust the video to fit within the new height */
+        /* Adjust the video to fit within the container */
         #certificate-video {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Ensure the video is fully visible */
+            object-fit: cover; /* Ensure the video covers the entire container */
         }
 
         .text-overlay {
             position: absolute;
-            color: #000; /* Black color */
-            font-size: 27px;
+            color: #0a0101; /* Light text color for contrast */
+            font-size: 12px; /* Default font size */
             font-family: Arial, sans-serif;
-            background: rgba(245, 245, 245, 0.5);
+            background: rgba(255, 255, 255, 0.7); /* Light background with 70% opacity */
             padding: 5px;
             pointer-events: none;
             z-index: 10;
@@ -50,34 +50,42 @@
         #number-overlay {
             top: 50%;
             left: 10%;
-            transform: translateY(-50%);
+            transform: translate(-50%, -50%);
         }
 
         #date-overlay {
-            top: 43%;
+            top: 55%;
             left: 10%;
-            transform: translateY(-50%);
+            transform: translate(-50%, -50%);
         }
 
         /* Media query for smaller screens */
         @media (max-width: 480px) {
             .text-overlay {
-                font-size: 18px;
-                padding: 3px;
+                font-family: sans-serif;
+        font-size: 13px; /* Adjust font size for better readability on small screens */
+        padding: 3px; /* Reduce padding */
+        background: #ffffff; /* Dark background with 70% opacity */
+        color: #0b0000; /* Light text color for contrast */
+    }
+
+
+            #number-overlay {
+                top: 45%; /* Adjust positioning for smaller screens */
+                left: 5%;
+                transform: translate(-50%, -50%);
             }
 
-            #number-overlay, #date-overlay {
-                left: 5%;
-            }
+            #date-overlay {
+        top: 41.66%; /* Adjust positioning for smaller screens */
+        left: 7%;
+        transform: translateY(-50%);
+    }
 
             /* Ensure container and video take full screen on mobile */
             .certificate-container {
                 width: 100%;
-                height: 100vh; /* Shorten the height for smaller screens */
-            }
-
-            #certificate-video {
-                object-fit: contain;
+                height: 100vh; /* Use full viewport height */
             }
         }
     </style>
@@ -97,11 +105,21 @@
             // Retrieve data from local storage
             const certificateNumber = localStorage.getItem('certificateNumber');
             const certificateDate = localStorage.getItem('certificateDate');
-
+    
+            // Function to format the date
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                const day = date.toLocaleDateString('en-GB', { day: '2-digit' });
+                const month = date.toLocaleDateString('en-GB', { month: 'short' });
+                const year = date.toLocaleDateString('en-GB', { year: '2-digit' });
+    
+                return `${day} ${month}, ${year}`;
+            }
+    
             // Update the overlay elements with the retrieved values
             document.getElementById('number-overlay').textContent = certificateNumber;
-            document.getElementById('date-overlay').textContent = certificateDate;
-
+            document.getElementById('date-overlay').textContent = formatDate(certificateDate);
+    
             // Play the video
             const video = document.getElementById('certificate-video');
             video.play();
