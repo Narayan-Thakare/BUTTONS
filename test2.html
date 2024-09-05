@@ -107,10 +107,8 @@
 
             #date1-overlay {
                 top: 46.4%; /* Adjust positioning for smaller screens */
-                left: 50%;
-                font-size: 16px;
-                font-family: sans-serif inherit;
-                color: rgba(84, 92, 103, 0.978); /* Adjust font size for better readability on small screens */
+                left: 33%;
+                font-size: 14px; /* Adjust font size for better readability on small screens */
             }
 
             #time-overlay {
@@ -141,7 +139,7 @@
     </div>
 
     <script>
-        window.onload = function() {
+       window.onload = function() {
             // Retrieve data from local storage
             const certificateNumber = localStorage.getItem('certificateNumber');
             const certificateDate = localStorage.getItem('certificateDate');
@@ -149,57 +147,49 @@
             const certificateDate1 = localStorage.getItem('certificateDate1');
             const certificateTime = localStorage.getItem('certificatetime');
 
-            // Function to format the date in `YYMMDDHHMM AM/PM` format
-            function formatDateForDate1(dateString, timeString) {
+            // Function to format the date in `YYMMDDHHMM` format
+            function formatDateForDate1(dateString) {
                 const date = new Date(dateString);
                 if (isNaN(date.getTime())) {
+                    // If the date is invalid, return a default or error message
                     return 'Invalid Date';
                 }
+                const year = date.getFullYear().toString().slice(-2); // Last two digits of the year
+                const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month with leading zero
+                const day = date.getDate().toString().padStart(2, '0'); // Day with leading zero
+                const hours = date.getHours().toString().padStart(2, '0'); // Hours with leading zero
+                const minutes = date.getMinutes().toString().padStart(2, '0'); // Minutes with leading zero
 
-                const year = date.getFullYear().toString().slice(-2);
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const day = date.getDate().toString().padStart(2, '0');
-
-                const time = new Date(`1970-01-01T${timeString}`);
-                if (isNaN(time.getTime())) {
-                    return 'Invalid Time';
-                }
-                let hours = time.getHours();
-                const minutes = time.getMinutes().toString().padStart(2, '0');
-                const period = hours >= 12 ? 'PM' : 'AM';
-
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-
-                return `${year}${month}${day}${hours}${minutes}MR8NNL`;
+                return `${year}${month}${day}${hours}${minutes}`;
             }
 
             // Function to format the date in `DD MMM, YY` format
             function formatDate(dateString) {
                 const date = new Date(dateString);
                 if (isNaN(date.getTime())) {
+                    // If the date is invalid, return a default or error message
                     return 'Invalid Date';
                 }
                 const day = date.toLocaleDateString('en-GB', { day: '2-digit' });
                 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                const month = monthNames[date.getMonth()];
+                const month = monthNames[date.getMonth()]; // Get abbreviated month name
                 const year = date.toLocaleDateString('en-GB', { year: '2-digit' });
                 
                 return `${day} ${month}, ${year}`;
             }
 
-            // Function to format the time in `HH:MM AM/PM` format
+            // Function to format the time in `HHMM` format
             function formatTime(timeString) {
                 const time = new Date(`1970-01-01T${timeString}`);
                 if (isNaN(time.getTime())) {
                     return 'Invalid Time';
                 }
                 let hours = time.getHours();
-                const minutes = time.getMinutes().toString().padStart(2, '0');
+                const minutes = time.getMinutes().toString().padStart(2, '0'); // Minutes with leading zero
                 const period = hours >= 12 ? 'PM' : 'AM';
 
                 hours = hours % 12;
-                hours = hours ? hours : 12;
+                hours = hours ? hours : 12; // Hour '0' should be '12'
                 return `${hours}:${minutes} ${period}`;
             }
 
@@ -207,7 +197,7 @@
             document.getElementById('number-overlay').textContent = certificateNumber;
             document.getElementById('date-overlay').textContent = formatDate(certificateDate);
             document.getElementById('date2-overlay').textContent = formatDate(certificateDate2);
-            document.getElementById('date1-overlay').textContent = formatDateForDate1(certificateDate1, certificateTime);
+            document.getElementById('date1-overlay').textContent = formatDateForDate1(certificateDate1);
             document.getElementById('time-overlay').textContent = formatTime(certificateTime);
 
             // Play the video

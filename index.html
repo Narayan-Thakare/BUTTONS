@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Data</title>
     <style>
-        overlay the data here
+        /* overlay the data here */
         .input-container {
             display: flex;
             flex-direction: column;
@@ -33,6 +33,19 @@
     <div class="input-container">
         <input type="text" id="certificate-number" placeholder="Certificate Number">
         <input type="date" id="certificate-date">
+        <input type="date" id="certificate-date1">
+        <input type="date" id="certificate-date2">
+        <input type="time" id="certificate-time">
+
+
+
+
+
+       
+
+        
+
+        
         <button onclick="submitData()">Go to Certificate</button>
     </div>
 
@@ -40,10 +53,22 @@
         function submitData() {
             const certificateNumber = document.getElementById('certificate-number').value;
             const certificateDate = document.getElementById('certificate-date').value;
+            const certificateDate1 = document.getElementById('certificate-date1').value;
+            const certificateDate2 = document.getElementById('certificate-date2').value;
+            const certificatetime = document.getElementById('certificate-time').value;
+
+
+
 
             // Store the values in local storage
             localStorage.setItem('certificateNumber', certificateNumber);
             localStorage.setItem('certificateDate', certificateDate);
+            localStorage.setItem('certificateDate1', certificateDate1);
+            localStorage.setItem('certificateDate2', certificateDate2);
+            localStorage.setItem('certificatetime', certificatetime);
+
+
+            
 
             // Redirect to the certificate page
             window.location.href = 'certificate.html';

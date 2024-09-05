@@ -59,28 +59,63 @@
             transform: translate(-50%, -50%);
         }
 
+        #date2-overlay {
+            top: 60%;
+            left: 10%;
+            transform: translate(-50%, -50%);
+        }
+
+        #date1-overlay {
+            top: 65%;
+            left: 10%;
+            transform: translate(-50%, -50%);
+        }
+
+        #time-overlay {
+            top: 70%;
+            left: 10%;
+            transform: translate(-50%, -50%);
+        }
+
         /* Media query for smaller screens */
         @media (max-width: 480px) {
             .text-overlay {
                 font-family: sans-serif;
-        font-size: 13px; /* Adjust font size for better readability on small screens */
-        padding: 3px; /* Reduce padding */
-        background: #ffffff; /* Dark background with 70% opacity */
-        color: #0b0000; /* Light text color for contrast */
-    }
-
+                font-size: 13px; /* Adjust font size for better readability on small screens */
+                padding: 3px; /* Reduce padding */
+                background: #ffffff; /* Light background */
+                color: #0b0000; /* Dark text color for contrast */
+            }
 
             #number-overlay {
-                top: 45%; /* Adjust positioning for smaller screens */
-                left: 5%;
-                transform: translate(-50%, -50%);
+                top: 29.70%; /* Adjust positioning for smaller screens */
+                left: 58%;
+                font-size: 23px; /* Adjust font size for better readability on small screens */
             }
 
             #date-overlay {
-        top: 41.66%; /* Adjust positioning for smaller screens */
-        left: 7%;
-        transform: translateY(-50%);
-    }
+                top: 41.66%; /* Adjust positioning for smaller screens */
+                left: 8%;
+                transform: translateY(-50%);
+            }
+
+            #date2-overlay {
+                top: 41.66%; /* Adjust positioning for smaller screens */
+                left: 50%;
+                transform: translateY(-50%);
+            }
+
+            #date1-overlay {
+                top: 46.4%; /* Adjust positioning for smaller screens */
+                left: 33%;
+                font-size: 14px; /* Adjust font size for better readability on small screens */
+            }
+
+            #time-overlay {
+                top: 41.66%; /* Adjust positioning for smaller screens */
+                left: 37%;
+                font-size: 13px; /* Adjust font size for better readability on small screens */
+            }
 
             /* Ensure container and video take full screen on mobile */
             .certificate-container {
@@ -98,28 +133,87 @@
         </video>
         <div id="number-overlay" class="text-overlay"></div>
         <div id="date-overlay" class="text-overlay"></div>
+        <div id="date2-overlay" class="text-overlay"></div>
+        <div id="date1-overlay" class="text-overlay"></div>
+        <div id="time-overlay" class="text-overlay"></div>
     </div>
 
     <script>
-        window.onload = function() {
+       window.onload = function() {
             // Retrieve data from local storage
             const certificateNumber = localStorage.getItem('certificateNumber');
             const certificateDate = localStorage.getItem('certificateDate');
-    
-            // Function to format the date
+            const certificateDate2 = localStorage.getItem('certificateDate2');
+            const certificateDate1 = localStorage.getItem('certificateDate1');
+            const certificateTime = localStorage.getItem('certificatetime');
+
+            // Function to format the date in `YYMMDDHHMM` format
+            function formatDateForDate1(dateString, timeString) {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        // If the date is invalid, return a default or error message
+        return 'Invalid Date';
+    }
+
+    // Format the date components
+    const year = date.getFullYear().toString().slice(-2); // Last two digits of the year
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month with leading zero
+    const day = date.getDate().toString().padStart(2, '0'); // Day with leading zero
+
+    // Parse and format the time
+    const time = new Date(`1970-01-01T${timeString}`); // Use a dummy date
+    if (isNaN(time.getTime())) {
+        return 'Invalid Time';
+    }
+    let hours = time.getHours();
+    const minutes = time.getMinutes().toString().padStart(2, '0'); // Minutes with leading zero
+    const period = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Hour '0' should be '12'
+
+    // Combine date and time into the final format
+    return `${year}${month}${day}${hours}${minutes} ${period}`;
+}
+
+
+            // Function to format the date in `DD MMM, YY` format
             function formatDate(dateString) {
                 const date = new Date(dateString);
+                if (isNaN(date.getTime())) {
+                    // If the date is invalid, return a default or error message
+                    return 'Invalid Date';
+                }
                 const day = date.toLocaleDateString('en-GB', { day: '2-digit' });
-                const month = date.toLocaleDateString('en-GB', { month: 'short' });
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const month = monthNames[date.getMonth()]; // Get abbreviated month name
                 const year = date.toLocaleDateString('en-GB', { year: '2-digit' });
-    
+                
                 return `${day} ${month}, ${year}`;
             }
-    
+
+            // Function to format the time in `HHMM` format
+            function formatTime(timeString) {
+                const time = new Date(`1970-01-01T${timeString}`);
+                if (isNaN(time.getTime())) {
+                    return 'Invalid Time';
+                }
+                let hours = time.getHours();
+                const minutes = time.getMinutes().toString().padStart(2, '0'); // Minutes with leading zero
+                const period = hours >= 12 ? 'PM' : 'AM';
+
+                hours = hours % 12;
+                hours = hours ? hours : 12; // Hour '0' should be '12'
+                return `${hours}:${minutes} ${period}`;
+            }
+
             // Update the overlay elements with the retrieved values
             document.getElementById('number-overlay').textContent = certificateNumber;
             document.getElementById('date-overlay').textContent = formatDate(certificateDate);
-    
+            document.getElementById('date2-overlay').textContent = formatDate(certificateDate2);
+            document.getElementById('date1-overlay').textContent = formatDateForDate1(certificateDate1);
+            document.getElementById('time-overlay').textContent = formatTime(certificateTime);
+
             // Play the video
             const video = document.getElementById('certificate-video');
             video.play();
