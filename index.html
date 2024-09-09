@@ -6,8 +6,8 @@
     <title>Input Data</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e9ecef;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f7fa;
             margin: 0;
             padding: 0;
             display: flex;
@@ -18,14 +18,14 @@
 
         .input-container {
             background-color: #ffffff;
-            padding: 25px 30px;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: stretch;
             transition: transform 0.3s ease;
         }
 
@@ -35,43 +35,47 @@
 
         .input-container h2 {
             margin-bottom: 20px;
-            font-size: 24px;
+            font-size: 26px;
             color: #333;
             text-align: center;
         }
 
+        .input-container label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            display: block;
+        }
+
         .input-container input {
-            margin: 12px 0;
-            padding: 14px;
+            margin-bottom: 16px;
+            padding: 12px;
             font-size: 16px;
-            width: 100%;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            transition: border-color 0.3s ease;
+            border-radius: 6px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .input-container input:focus {
             border-color: #007BFF;
             outline: none;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
         }
 
         .input-container button {
-            margin-top: 25px;
-            padding: 14px 22px;
+            padding: 12px;
             font-size: 18px;
             color: #ffffff;
             background-color: #007BFF;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            width: 100%;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .input-container button:hover {
             background-color: #0056b3;
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
         }
 
         .input-container button:active {
@@ -81,16 +85,15 @@
         @media (max-width: 600px) {
             .input-container {
                 padding: 20px;
-                border-radius: 10px;
             }
 
             .input-container input {
-                padding: 12px;
+                padding: 10px;
                 font-size: 15px;
             }
 
             .input-container button {
-                padding: 12px 18px;
+                padding: 10px;
                 font-size: 16px;
             }
         }
