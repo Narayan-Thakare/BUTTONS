@@ -113,7 +113,7 @@
                 font-family: 'Aptos', sans-serif;
                 font-weight: 700;
             }
-
+ 
             #date1-overlay {
                 top: 47.4%; /* Adjust positioning for smaller screens */
                 left: 50%;
@@ -153,6 +153,24 @@
         <div id="date1-overlay" class="text-overlay"></div>
         <div id="time-overlay" class="text-overlay"></div>
     </div>
+
+<!-- /// Script for the video -->
+    <script>
+        const video = document.getElementById('certificate-video');
+        const startTime = 1.4; // Start time in seconds
+        const endTime = 3.35; // End time in seconds
+
+        video.addEventListener('loadedmetadata', function() {
+            video.currentTime = startTime; // Set the initial time to start
+        });
+
+        video.addEventListener('timeupdate', function() {
+            if (video.currentTime >= endTime) {
+                video.currentTime = startTime;
+                video.play(); // Ensure playback continues
+            }
+        });
+    </script>
 
     <script>
         window.onload = function() {
