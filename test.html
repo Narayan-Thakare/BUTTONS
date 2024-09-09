@@ -1,47 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Loop</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        #certificate-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    </style>
-</head>
-<body>
-    <video id="certificate-video" autoplay muted>
-        <source src="pmpllast22.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
-    <script>
-        const video = document.getElementById('certificate-video');
-        const startTime = 1.4; // Start time in seconds
-        const endTime = 3.35; // End time in seconds
-
-        video.addEventListener('loadedmetadata', function() {
-            video.currentTime = startTime; // Set the initial time to start
-        });
-
-        video.addEventListener('timeupdate', function() {
-            if (video.currentTime >= endTime) {
-                video.currentTime = startTime;
-                video.play(); // Ensure playback continues
-            }
-        });
-    </script>
-</body>
-</html>
+<div class="input-container">
+    <h2>Enter the Ticket Details                          Babuu ❤️</h2>
+        
+    <label for="certificate-number">Last 4 Digits of Aadhaar:</label>
+    <input type="text" id="certificate-number" placeholder="Aadhaar Last Four Digits" 
+           pattern="\d{4}" maxlength="4" minlength="4" required title="Please enter exactly 4 digits">
+    
+    <label for="certificate-date">Date:</label>
+    <input type="date" id="certificate-date" placeholder="Enter The Date">
+    
+    <label for="certificate-time">Time:</label>
+    <input type="time" id="certificate-time" placeholder="Time To Start">
+    
+    <button onclick="submitData()">Go to Ticket</button>
+</div>
