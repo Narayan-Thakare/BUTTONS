@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter Password</title>
     <style>
-        /* Basic styles for centering the form */
         body {
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
             background-color: #f4f4f4;
         }
 
@@ -24,11 +22,6 @@
             text-align: center;
             width: 100%;
             max-width: 400px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
         }
 
         input[type="password"] {
@@ -49,7 +42,7 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            margin-top: 10px;
         }
 
         button:hover {
@@ -68,20 +61,32 @@
         <input type="password" id="password-input" placeholder="Enter password">
         <button id="submit-password">Submit</button>
         <p id="error-message" style="color: red; display: none;">Incorrect password, try again.</p>
-        <button id="reset-password" style="margin-top: 15px;">Reset Password</button> <!-- New Reset Button -->
+
+        <!-- Reset button to allow password reset -->
+        <button id="reset-password">Reset Password</button>
     </div>
-    
+
     <script>
-        const staticPassword = "12345"; // Define your static password
-    
+        const staticPassword = "123467"; // Define your static password
+        const passwordVersion = "v2";   // Define a version for the password (change this when password changes)
+
+        // Check if password version has changed
+        const storedPasswordVersion = localStorage.getItem('passwordVersion');
+        if (storedPasswordVersion !== passwordVersion) {
+            localStorage.removeItem('passwordVerified'); // Clear verified password if version changes
+            localStorage.setItem('passwordVersion', passwordVersion); // Update to the new password version
+            location.reload(); // Reload the page to prompt for the new password
+        }
+
         // Check if password is already entered and valid
         if (localStorage.getItem('passwordVerified')) {
             window.location.href = "home1.html"; // Redirect to your main app page
         }
-    
+
+        // Event listener for password submission
         document.getElementById('submit-password').addEventListener('click', function() {
             const enteredPassword = document.getElementById('password-input').value;
-    
+
             // Check if the entered password matches the static password
             if (enteredPassword === staticPassword) {
                 localStorage.setItem('passwordVerified', true); // Save the flag in localStorage
@@ -90,13 +95,12 @@
                 document.getElementById('error-message').style.display = 'block'; // Show error message
             }
         });
-    
-        // Reset Password Button - Clears Local Storage
+
+        // Event listener for password reset
         document.getElementById('reset-password').addEventListener('click', function() {
             localStorage.removeItem('passwordVerified'); // Clear the passwordVerified flag
             alert('Password reset. Please reload the page.');
         });
     </script>
-    
 </body>
 </html>
