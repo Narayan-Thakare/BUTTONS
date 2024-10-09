@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Data</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .input-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            transition: transform 0.3s ease;
+        }
+
+        .input-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .input-container h2 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            color: #333;
+            text-align: center;
+        }
+
+        .input-container label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-container input {
+            margin-bottom: 16px;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-container input:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .input-container button {
+            padding: 12px;
+            font-size: 18px;
+            color: #ffffff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-container button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        .input-container button:active {
+            background-color: #004085;
+        }
+
+        @media (max-width: 600px) {
+            .input-container {
+                padding: 20px;
+            }
+
+            .input-container input {
+                padding: 10px;
+                font-size: 15px;
+            }
+
+            .input-container button {
+                padding: 10px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+ <!-- <label for="certificate-date1">Enter the same year, month, and date:</label>
+        <input type="date" id="certificate-date1" placeholder="Enter The Same Date">
+    
+        <label for="certificate-date2">Enter the same year, month, and date again:</label>
+        <input type="date" id="certificate-date2" placeholder="Enter The Same Date"> -->
+<body>
+    <!-- pmpl2 -->
+    <div class="input-container">
+        <h2>Enter the Ticket Details   Babuu ❤️</h2>
+            
+        <label for="certificate-number">Last 4 Digits of Aadhaar:</label>
+        <input type="text" id="certificate-number" placeholder="Aadhaar Last Four Digits" 
+               pattern="\d{4}" maxlength="4" minlength="4" required title="Please enter exactly 4 digits">
+        
+        <label for="certificate-date">Date:</label>
+        <input type="date" id="certificate-date" placeholder="Enter The Date">
+        
+        <label for="certificate-time">Time:</label>
+        <input type="time" id="certificate-time" placeholder="Time To Start">
+        
+        <button onclick="submitData()">Go to Ticket</button>
+    </div>
+    
+
+    <script>
+        // Function to set today's date automatically
+        function setTodayDate() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+            const dd = String(today.getDate()).padStart(2, '0');
+            const formattedToday = `${yyyy}-${mm}-${dd}`;
+            
+            // Set the value of the date input to today's date
+            document.getElementById('certificate-date').value = formattedToday;
+        }
+    
+        // Call the function to set the date when the page loads
+        window.onload = setTodayDate;
+    </script>
+
+    <script>
+        function submitData() {
+            const certificateNumber = document.getElementById('certificate-number').value;
+            const certificateDate = document.getElementById('certificate-date').value;
+            const certificateDate1 = document.getElementById('certificate-date').value;
+            const certificateDate2 = document.getElementById('certificate-date').value;
+            const certificateTime = document.getElementById('certificate-time').value;
+
+            // Store the values in local storage
+            localStorage.setItem('certificateNumber', certificateNumber);
+            localStorage.setItem('certificateDate', certificateDate);
+            localStorage.setItem('certificateDate1', certificateDate1);
+            localStorage.setItem('certificateDate2', certificateDate2);
+            localStorage.setItem('certificateTime', certificateTime);
+
+            // Redirect to the certificate page
+            window.location.href = 'certificate.html';
+        }
+    </script>
+</body>
+</html>
