@@ -67,7 +67,7 @@
     </div>
 
     <script>
-        const staticPassword = "123467"; // Define your static password
+        const staticPassword = "00000"; // Define your static password
         const passwordVersion = "v2";   // Define a version for the password (change this when password changes)
 
         // Check if password version has changed
@@ -80,7 +80,7 @@
 
         // Check if password is already entered and valid
         if (localStorage.getItem('passwordVerified')) {
-            window.location.href = "home1.html"; // Redirect to your main app page
+            window.location.href = "home2.html"; // Redirect to your main app page
         }
 
         // Event listener for password submission
@@ -90,7 +90,7 @@
             // Check if the entered password matches the static password
             if (enteredPassword === staticPassword) {
                 localStorage.setItem('passwordVerified', true); // Save the flag in localStorage
-                window.location.href = "home1.html"; // Redirect to main page
+                window.location.href = "home2.html"; // Redirect to main page
             } else {
                 document.getElementById('error-message').style.display = 'block'; // Show error message
             }
