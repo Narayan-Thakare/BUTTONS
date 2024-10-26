@@ -108,27 +108,25 @@
 <body>
     <!-- pmpl2 -->
     <div class="input-container">
-        <h2>Enter the Ticket Details</h2>
-        
+        <h2>Enter the Ticket Details this is pcmcp </h2>
+            
         <label for="certificate-number">Last 4 Digits of Aadhaar:</label>
         <input type="text" id="certificate-number" placeholder="Aadhaar Last Four Digits" 
                pattern="\d{4}" maxlength="4" minlength="4" required title="Please enter exactly 4 digits">
         
         <label for="certificate-date">Date:</label>
-        <input type="date" id="certificate-date" placeholder="Enter The Date" required>
+        <input type="date" id="certificate-date" placeholder="Enter The Date">
         
         <label for="certificate-time">Time:</label>
-        <input type="time" id="certificate-time" placeholder="Time To Start" required>
+        <input type="time" id="certificate-time" placeholder="Time To Start">
         
         <button onclick="submitData()">Go to Ticket</button>
-        
-        <br><br><br><br><br>
-        
-        <!-- Navigation Button -->
-        <button onclick="window.location.href='home3.html'" style="color: aqua; background-color: rgb(104, 103, 193);">PMC AND PCMC Ticket</button>
+
+
+        <!-- ////////////////////////////////////////////////////// -->
+
+
     </div>
-    
-    
     
 
     <script>
@@ -164,7 +162,7 @@
             localStorage.setItem('certificateTime', certificateTime);
 
             // Redirect to the certificate page
-            window.location.href = 'certificate.html';
+            window.location.href = 'certificate3.html';
         }
     </script>
 </body>
