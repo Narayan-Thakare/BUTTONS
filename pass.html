@@ -104,7 +104,7 @@
             position: relative;
             right: 15px;
             width: 110%;
-            height: 20px;
+            height: 0px;
             margin-bottom: 0px;
         }
 
@@ -137,7 +137,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            font-weight: 540;
+            font-weight: 560;
             box-sizing: border-box;
         }
 
@@ -148,7 +148,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #dcd3d3;
+    background-color: #f2f0f0;
     color: #222222;
     padding: 7px 0;
     font-size: 15px;
@@ -187,30 +187,7 @@
             font-weight: bold;
         }
 
-        .ticket-route {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
-            margin: 5px 3px;
-        }
-
-        .ticket-route {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
-            margin: -5px 5px;
-        }
-
-        .route-point {
-            width: 37%;
-            text-align: center;
-            font-weight: 500;
-            color: #4e5451;
-            font-size: 16.8px;
-        }
-
+      
         .arrow-container {
             display: flex;
             justify-content: center;
@@ -372,7 +349,7 @@
     font-size: 13px;
 
     position: absolute;
-    bottom: 332px;
+    bottom: 361px;
     left: 0%;
     transform: translateX(-50%);
     /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */ /* Removed */
@@ -389,7 +366,7 @@
     font-size: 13px;
 
     position: absolute;
-    bottom: 332px;
+    bottom: 361px;
     left: 99.50%;
     transform: translateX(-50%);
     /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */ /* Removed */
@@ -443,9 +420,71 @@
   }
 }
 
+/* ////////////////////////////////////////// */
+
+/* Basic styles for ticket form */
+.ticket-form {
+  position: relative; /* To keep it as reference */
+  z-index: 1;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 500px;
+  margin: 50px auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+/* ///////////////////////////////////////// */
+.qr-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #e0e0e0; /* Light border */
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),   /* soft shadow */
+    0 10px 20px rgba(0, 0, 0, 0.15), /* deeper 3D effect */
+    inset 0 1px 0 rgba(255, 255, 255, 0.8); /* subtle inner highlight */
+  z-index: 9999;
+  display: none;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.qr-overlay.active {
+  display: block;
+  animation: popIn 0.3s ease-out;
+}
+
+/* Optional: background dimming */
+.qr-overlay::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: white; /* darker backdrop for contrast */
+  z-index: -1;
+  border-radius: 12px;
+}
+
+/* Smooth scale animation */
+@keyframes popIn {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
 
 
     </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 </head>
 
 <body>
@@ -477,14 +516,18 @@
 
 
         <div class="ticket-info">
-            <div class="info-block">
-                <p class="info-title">Route</p>
-                <p class="info-value numberFont" id="displayRoute"></p>
-            </div>
-            <div class="info-block">
-                <p class="info-title">Tickets count</p>
-                <p class="info-value" id="displayTicketCount"></p>
-            </div>
+           <div class="info-block" style="text-align: left; margin-left: 0;">
+    <p class="info-title">Pass Type</p>
+    <p class="info-value" id="displayTicketCount"></p>
+</div>
+
+          <div class="info-block" style="text-align: center; width: fit-content; margin: 0 auto 0 25px;">
+  <p class="info-title">ID</p>
+  <p class="info-value numberFont" id="displayRoute"></p>
+</div>
+
+
+
             <div class="info-block">
                 <p class="info-title">Fare</p>
                 <p class="info-value"
@@ -494,19 +537,17 @@
 
 
 
-        <div class="ticket-route">
-            <p class="route-point" id="displayStartingPoint"></p>
-            <div class="arrow-container">
-                <span class="arrow">━</span>
-                <span class="triangle-head">▶</span>
-            </div>
-            <p class="route-point" id="displayDroppingPoint"></p>
-        </div>
+       <div class="ticket-route">
+    <p class="route-point" id="displayStartingPoint" style="display: none;"></p>
+    <p class="route-point" id="displayDroppingPoint" style="display: none;"></p>
+</div>
 
 
 
 
 
+<div id="qr-overlay" class="qr-overlay"></div>
+ <!-- QR will show here -->
 
 
 
@@ -536,9 +577,45 @@
 
 
         <div class="line-break-bottom"></div>
-        <div class="ticket-footer">
-<img src="https://raw.githubusercontent.com/Narayan-Thakare/SOLAR_ENERGY_WEBSITE/main/pmpml.png" alt="Ticket Stamp" class="popup-image">
-        </div>
+        
+
+<div class="ticket-footer">
+    <div 
+        class="OneDayPass-time" 
+        id="OneDayPass" 
+        style="
+               background-color: #e21d23;
+            color: white;
+            padding: 10px 0;
+            font-size: 13px;
+            border-radius: 1px 1px 0 0;
+            margin: 0;
+            position: absolute;
+            top: 1;
+            left: 0;
+            width: 100%;
+            height: 4%;
+            font-weight: 600;
+            box-sizing: border-box;
+                    display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+            
+        ">
+        One Day Pass
+    </div>
+
+
+
+<!-- ///////////////////// -->
+    <div style="height: 15px;"></div>
+    <div style="height: 20px;"></div>
+
+    <img src="pmpml.png" alt="Ticket Stamp" class="popup-image">
+    <div style="height: 15px;"></div>
+</div>
 
 
         <div class="">
@@ -552,17 +629,75 @@
         
 
     </div>
+    
     <!-- <div class="complaint-icon">
         <img src="https://img.icons8.com/material-rounded/24/complaint.png" alt="complaint"   />
     </div> -->
 
-    <button class="qr-button">
-        <span class="material-symbols-outlined icon">qr_code</span>
-        Show QR code
-      </button>
+<button class="qr-button">
+  <span class="material-symbols-outlined icon">qr_code</span>
+  Show QR code
+</button>
+
+
 
     
     <script>
+////////////////////////////////////////////////
+
+  const qrButton = document.querySelector('.qr-button');
+const qrOverlay = document.getElementById('qr-overlay');
+
+qrButton.addEventListener('click', () => {
+  qrOverlay.innerHTML = ''; // clear old QR
+
+  const dataToEncode = "https://example.com"; // Change to your data
+
+  // Generate QR code inside overlay
+  new QRCode(qrOverlay, {
+    text: dataToEncode,
+    width: 200,
+    height: 200,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+  });
+
+  qrOverlay.classList.add('active');
+});
+
+// Click outside QR or ESC closes overlay
+qrOverlay.addEventListener('click', (e) => {
+  if (e.target === qrOverlay) {
+    qrOverlay.classList.remove('active');
+    qrOverlay.innerHTML = '';
+  }
+});
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    qrOverlay.classList.remove('active');
+    qrOverlay.innerHTML = '';
+  }
+});
+
+
+// Optional: hide overlay when clicking outside QR or press ESC
+window.addEventListener('click', (e) => {
+  if (e.target === qrContainer) {
+    qrContainer.style.display = 'none';
+    qrContainer.innerHTML = '';
+  }
+});
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    qrContainer.style.display = 'none';
+    qrContainer.innerHTML = '';
+  }
+});
+
+
+
         // Function to format date and time as "yymmddhourminute"
         const generateTicketId = (bookingDate) => {
             const year = bookingDate.getFullYear().toString().slice(-2); // Last two digits of the year
@@ -607,10 +742,13 @@ console.log("TicketCount from localStorage:", ticketCount); // Debug
 
         // Ensure the ticketCount is a number
 
-        ticketCount = parseInt(ticketCount, 10);
+
+
+       ticketCount = parseInt(ticketCount, 10);
 if (isNaN(ticketCount)) {
-    ticketCount = 1; // Fallback
+    ticketCount = "PMC & PCMC"; // Static fallback string
 }
+
         // Booking time from localStorage (if provided, else use the current time)
         const bookingTime = localStorage.getItem('bookingTime')
             ? new Date(localStorage.getItem('bookingTime'))
@@ -618,14 +756,18 @@ if (isNaN(ticketCount)) {
 
         // Format the booking time and calculate validity time
         const bookingTimeFormatted = formatDateTime(bookingTime);
-        const validityTimeFormatted = formatDateTime(new Date(bookingTime.getTime() + 30 * 60 * 1000)); // 30 minutes from now
+       // bookingTime is a Date object
+const validityTime = new Date(bookingTime);
+validityTime.setHours(23, 59, 0, 0);  // Set to 11:59:00 PM on the same day
+
+const validityTimeFormatted = formatDateTime(validityTime);
 
         // Generate the ticket ID using the booking time
         const ticketId = generateTicketId(bookingTime);
 
         // Display the retrieved data in the HTML elements
         document.getElementById('displayRoute').textContent = route;
-        document.getElementById('displayTicketCount').textContent = `${ticketCount}F`; // Display the ticket count directly
+        document.getElementById('displayTicketCount').textContent = `${ticketCount}`; // Display the ticket count directly
         document.getElementById('displayFare').textContent = `₹${fare}`;
         document.getElementById('displayStartingPoint').textContent = startingPoint;
         document.getElementById('displayDroppingPoint').textContent = droppingPoint;
@@ -660,20 +802,23 @@ function startCountdown(expiryTime) {
             return;
         }
 
+        const hours = Math.floor(distance / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        countdownEl.textContent = `Expires in ${"00"}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        countdownEl.textContent = `Expires in ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
     updateCountdown(); // Initial call
     const timer = setInterval(updateCountdown, 1000);
 }
 
-// const validityTimeFormatted = formatDateTime(new Date(bookingTime.getTime() + 30 * 60 * 1000));
+// Suppose bookingTime is already a Date object
+const validityEndTime = new Date(bookingTime);
+validityEndTime.setHours(23, 59, 0, 0); // 11:59 PM today
 
-const validityEndTime = bookingTime.getTime() + 30 * 60 * 1000;
-startCountdown(validityEndTime);
+startCountdown(validityEndTime.getTime());
+
 
 
     </script>
